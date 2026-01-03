@@ -1,0 +1,41 @@
+# ZWyrm Configuration
+# mode: safe | enforce
+mode: safe
+
+logging:
+  level: INFO  # DEBUG | INFO | WARNING | ERROR
+  file: /var/log/zwyrm/zwyrm.log
+  max_size: 10485760  # 10MB
+  backup_count: 5
+
+file_integrity:
+  watch:
+    - /etc/passwd
+    - /etc/shadow
+    - /etc/ssh/sshd_config
+    - /etc/sudoers
+    - /etc/hosts
+  check_interval: 60  # seconds
+
+network:
+  suspicious_ports: [4444, 1337, 6666, 31337, 31338]
+  monitor_outgoing: true
+  monitor_incoming: true
+
+process:
+  scan_interval: 3  # seconds
+  whitelist:
+    - /usr/bin/python3
+    - /bin/bash
+    - /usr/bin/sudo
+
+alerting:
+  email:
+    enabled: false
+    smtp_server: smtp.gmail.com
+    smtp_port: 587
+    sender: zwyrm@localhost
+    recipients: []
+  slack:
+    enabled: false
+    webhook_url: ""

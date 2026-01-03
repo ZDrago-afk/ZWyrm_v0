@@ -1,0 +1,25 @@
+[Unit]
+Description=ZWyrm Behavioral Antivirus
+Documentation=https://github.com/yourusername/zwyrm
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/zwyrm
+ExecStart=/usr/bin/python3 /opt/zwyrm/main.py
+Restart=on-failure
+RestartSec=5
+StandardOutput=append:/var/log/zwyrm/zwyrm.log
+StandardError=append:/var/log/zwyrm/zwyrm-error.log
+Environment=PYTHONUNBUFFERED=1
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/var/log/zwyrm /opt/zwyrm/logs
+
+[Install]
+WantedBy=multi-user.target
